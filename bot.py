@@ -4,6 +4,7 @@ import telegram
 from telegram import Update, ForceReply, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 import numpy as np
+import id
 Diccionario = ['guayas','pichincha','azuay','cotopaxi','Tungurahua','chimborazo','los-rios','el-oro','manabi','imbabura']
 # Enable logging
 logging.basicConfig(
@@ -28,7 +29,7 @@ def start(context: CallbackContext)-> None:
             Descripcion = Descripcion.replace("*",' ')
             keyboard = InlineKeyboardMarkup.from_button(InlineKeyboardButton(text="Más Información", url=Datos[n][3]))       
             try:
-                context.bot.send_message(chat_id="-1001568757251",text="🔴 *"+Datos[n][0]+"*🔴\n▶️_"+Datos[n][1]+"_ ◀️\n \n*Descripción*:\n"+Descripcion+"\n" , parse_mode='Markdown',reply_markup=keyboard)
+                context.bot.send_message(chat_id=id.Datos.chat_id,text="🔴 *"+Datos[n][0]+"*🔴\n▶️_"+Datos[n][1]+"_ ◀️\n \n*Descripción*:\n"+Descripcion+"\n" , parse_mode='Markdown',reply_markup=keyboard)
             except:
                 pass
         if len(DatosP)!=0:
@@ -37,7 +38,7 @@ def start(context: CallbackContext)-> None:
             DatosP = Datos
     if len(DatosP)> 0:
         DatosCT = DatosP
-    DatosP = [] #1489167212
+    DatosP = []
     for d in Diccionario:
         Datos = scrapping.scrappingUnmejorempleo(d,DatosUME)
         for n in range(0,len(Datos)):
@@ -46,7 +47,7 @@ def start(context: CallbackContext)-> None:
             Descripcion = Descripcion.replace("*",' ')
             keyboard = InlineKeyboardMarkup.from_button(InlineKeyboardButton(text="Más Información", url=Datos[n][3]))       
             try:
-                context.bot.send_message(chat_id="-1001568757251",text="🔴 *"+Datos[n][0]+"*🔴\n▶️_"+Datos[n][1]+"_ ◀️\n \n*Descripción*:\n"+Descripcion+"\n" , parse_mode='Markdown',reply_markup=keyboard)
+                context.bot.send_message(chat_id=id.Datos.chat_id,text="🔴 *"+Datos[n][0]+"*🔴\n▶️_"+Datos[n][1]+"_ ◀️\n \n*Descripción*:\n"+Descripcion+"\n" , parse_mode='Markdown',reply_markup=keyboard)
             except:
                 pass
         if len(DatosP)!=0:
@@ -64,7 +65,7 @@ def start(context: CallbackContext)-> None:
         keyboard = InlineKeyboardMarkup.from_button(InlineKeyboardButton(text="Más Información", url=Datos[n][3]))       
         try:
             if Datos[n][0]!="":
-                context.bot.send_message(chat_id="-1001568757251",text="🔴 *"+Datos[n][0]+"*🔴\n▶️_"+Datos[n][1]+"_ ◀️\n \n*Descripción*:\n"+Descripcion+"\n" , parse_mode='Markdown',reply_markup=keyboard)
+                context.bot.send_message(chat_id=id.Datos.chat_id,text="🔴 *"+Datos[n][0]+"*🔴\n▶️_"+Datos[n][1]+"_ ◀️\n \n*Descripción*:\n"+Descripcion+"\n" , parse_mode='Markdown',reply_markup=keyboard)
         except:
             pass
     if len(DatosP)!=0:
@@ -76,18 +77,18 @@ def start(context: CallbackContext)-> None:
 def Comunicado(update: Update, context: CallbackContext) -> None:
     if update.effective_user.username =="KlHiuber":
         s = " ".join(context.args)
-        context.bot.send_message(chat_id="-1001568757251", text = s, parse_mode='Markdown')    
+        context.bot.send_message(chat_id=id.Datos.chat_id, text = s, parse_mode='Markdown')    
 
 def ban(update: Update, context: CallbackContext)-> None:
     if update.effective_user.username =="KlHiuber":
         due = context.args[0]        
-        context.bot.send_message(chat_id="-1001568757251",text="No me caes nada bien. El Usuario {} se ha eliminado".format(due))
-        context.bot.ban_chat_member(user_id=due, chat_id="-1001568757251")
+        context.bot.send_message(chat_id=id.Datos.chat_id,text="No me caes nada bien. El Usuario {} se ha eliminado".format(due))
+        context.bot.ban_chat_member(user_id=due, chat_id=id.Datos.chat_id)
     
 def main() -> None:
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
-    updater = Updater("5161829955:AAGm285IHSM7MjebLXs4IvOWWMxzR8p3FfI")
+    updater = Updater(id.Datos.Token)
 
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
