@@ -27,4 +27,4 @@ Apoyado por la librería [python-telegram-bot v.13.10](https://github.com/python
 El único fin es mantener un grupo de telegram informado. Con el tiempo se integrarán más funcionalidades para llegar a tener un bot totalmente inteligente.
 
 ## Donaciones
-Aunque este proyecto es investigativo. Para mejorar este proyecto y realizarlo en multiplataformas agradeceríamos tu aporte. [Invítame algo](https://www.paypal.com/paypalme/klifhiuber)
+Aunque este proyecto es netamente investigativo. Para mejorar este proyecto y realizarlo en multiplataformas agradeceríamos tu aporte. [Invítame algo](https://www.paypal.com/paypalme/klifhiuber)
