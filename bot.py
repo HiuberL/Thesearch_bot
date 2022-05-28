@@ -5,7 +5,6 @@ from telegram import Update, ForceReply, InlineKeyboardMarkup, InlineKeyboardBut
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 import numpy as np
 import id
-Diccionario = ['guayas','pichincha','azuay','cotopaxi','Tungurahua','chimborazo','los-rios','el-oro','manabi','imbabura']
 # Enable logging
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
@@ -21,7 +20,7 @@ def Agradecimiento(update: Update, context: CallbackContext) -> None:
 def start(context: CallbackContext)-> None:
     global DatosCT, DatosUME, DatosLin
     DatosP = []
-    for d in Diccionario:
+    for d in id.Diccionario:
         Datos = scrapping.scrappingComputrabajo(d,DatosCT)
         for n in range(0,len(Datos)):
             Descripcion = str(Datos[n][2])
@@ -39,7 +38,7 @@ def start(context: CallbackContext)-> None:
     if len(DatosP)> 0:
         DatosCT = DatosP
     DatosP = []
-    for d in Diccionario:
+    for d in id.Diccionario:
         Datos = scrapping.scrappingUnmejorempleo(d,DatosUME)
         for n in range(0,len(Datos)):
             Descripcion = str(Datos[n][2])
