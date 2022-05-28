@@ -1,2 +1,6 @@
 chromedriver.exe
 id.py
+Data/CT.txt
+__pycache__/id.cpython-39.pyc
+__pycache__/commands.cpython-39.pyc
+__pycache__/scrapping.cpython-39.pyc
