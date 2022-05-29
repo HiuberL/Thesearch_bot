@@ -90,7 +90,7 @@ def scrappingdata(page,Country,Dataprevious):
             
     if page == "LIN":
         time.sleep(1)
-        driver.get('https://www.linkedin.com/jobs/search/?geoId=106373116&location=Ecuador&position=1&pageNum=0')       
+        driver.get('https://www.linkedin.com/jobs/search/?keywords=&location=Ecuador&locationId=&geoId=106373116&f_TPR=r86400&position=1&pageNum=0')       
         time.sleep(5)
         for n in range(1,21):
             try:
