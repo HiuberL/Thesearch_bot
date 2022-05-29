@@ -112,6 +112,34 @@ def scrappingdata(page,Country,Dataprevious):
                     Data.append([Title,Position,Description,direccion])        
             except:
                 pass
+            
+    if page == "EE":
+        time.sleep(1)
+        driver.get('https://encuentraempleo.trabajo.gob.ec/socioEmpleo-war/paginas/procesos/busquedaOferta.jsf')       
+        time.sleep(2)
+        for i in range(1,6):
+            time.sleep(2)
+            for n in range(1,6):
+                try:
+                    driver.find_element(By.XPATH,'/html/body/div[1]/div[2]/form/table/tbody/tr/td[2]/fieldset['+str(n)+']/div/a').click()
+                    time.sleep(2)
+                    Title = driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/table/tbody/tr[1]/td/table/tbody/tr[1]/td[2]')
+                    Title = Title.text
+                    Position = driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/table/tbody/tr[1]/td/table/tbody/tr[2]/td[2]')
+                    Position = Position.text
+                    Description = driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/table/tbody/tr[2]/td/table/tbody/tr[3]/td[2]')
+                    Description2 = driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/table/tbody/tr[2]/td/table/tbody/tr[3]/td[4]')
+                    Description3 = driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/table/tbody/tr[2]/td/table/tbody/tr[5]/td[2]')
+                    Description = Description.text + "\n" + Description2.text + '\n' + Description3.text
+                    direccion = driver.current_url
+                    Data.append([Title,Position,Description,direccion])        
+                    driver.back()
+                    time.sleep(1)
+                except:
+                    pass
+            driver.find_element(By.CSS_SELECTOR,'#formBuscaOferta\:pagina > div.ui-selectonemenu-trigger.ui-state-default.ui-corner-right > span').click()
+            time.sleep(0.5)
+            driver.find_element(By.CSS_SELECTOR,'#formBuscaOferta\:pagina_'+str(i)+'').click()
     driver.close()        
     return Data
 

@@ -34,7 +34,7 @@ def start(context: CallbackContext):
                     DatosP = DatosP+Datos
                 else:
                     DatosP = Datos
-                if page == 'LIN':
+                if page == 'LIN' or page == 'EE' :
                     seguir = False
                 else:
                     seguir = True
