@@ -11,11 +11,10 @@ import os
 
 def comprobData_previos(Datanew,Dataprevious):
     if len(Dataprevious) != 0:
-        existe = Dataprevious.__contains__(Datanew)
-        if not existe:
-            return False
-        else:
-            return True
+        for datos in Dataprevious:
+            if Datanew[0] == datos[0]:
+                return True
+        return False
     else:
             return False
 
@@ -72,20 +71,20 @@ def scrappingdata(page,Country,Dataprevious):
         time.sleep(1)
         for n in range(1,21):
             try:    
-                    Title = driver.find_element(By.XPATH,'/html/body/div[1]/div/div/section/article/div['+str(n)+']/h3')
-                    Title = Title.text
-                    direccion = driver.find_element(By.XPATH,'/html/body/div[1]/div/div/section/article/div['+str(n)+']/h3/a')
-                    direccion = direccion.get_attribute('href')
-                    Position = driver.find_element(By.XPATH,'/html/body/div[1]/div/div/section/article/div['+str(n)+']/ul/li[1]')
-                    Position = Position.text
-                    Description = driver.find_element(By.XPATH,'/html/body/div[1]/div/div/section/article/div['+str(n)+']/ul/li[2]')
-                    Description = Description.text
-                    Date = driver.find_element(By.XPATH,'/html/body/div[1]/div/div/section/article/div['+str(n)+']/ul/li[3]')
-                    Date = Date.text
-                    Description = Description + "\n"+Date
-                    c = comprobData_previos([Title,Position,Description,direccion],Dataprevious)
-                    if not c:
-                        Data.append([Title,Position,Description,direccion])
+                Title = driver.find_element(By.XPATH,'/html/body/div[1]/div/div/section/article/div['+str(n)+']/h3')
+                Title = Title.text
+                direccion = driver.find_element(By.XPATH,'/html/body/div[1]/div/div/section/article/div['+str(n)+']/h3/a')
+                direccion = direccion.get_attribute('href')
+                Position = driver.find_element(By.XPATH,'/html/body/div[1]/div/div/section/article/div['+str(n)+']/ul/li[1]')
+                Position = Position.text
+                Description = driver.find_element(By.XPATH,'/html/body/div[1]/div/div/section/article/div['+str(n)+']/ul/li[2]')
+                Description = Description.text
+                Date = driver.find_element(By.XPATH,'/html/body/div[1]/div/div/section/article/div['+str(n)+']/ul/li[3]')
+                Date = Date.text
+                Description = Description + "\n"+Date
+                c = comprobData_previos([Title,Position,Description,direccion],Dataprevious)
+                if not c:
+                    Data.append([Title,Position,Description,direccion])
             except:
                 pass
             

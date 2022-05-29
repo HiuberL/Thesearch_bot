@@ -27,7 +27,7 @@ def start(context: CallbackContext):
                     keyboard = InlineKeyboardMarkup.from_button(InlineKeyboardButton(text="Más Información", url=Datos[n][3]))       
                     try:
                         if Datos[n][0]!="":
-                            context.bot.send_message(chat_id=id.Datos.chat_my_id,text="🔴 *"+Datos[n][0]+"*🔴\n▶️_"+Datos[n][1]+"_ ◀️\n \n*Descripción*:\n"+Descripcion+"\n" , parse_mode='Markdown',reply_markup=keyboard)
+                            context.bot.send_message(chat_id=id.Datos.chat_id,text="🔴 *"+Datos[n][0]+"*🔴\n▶️_"+Datos[n][1]+"_ ◀️\n \n*Descripción*:\n"+Descripcion+"\n" , parse_mode='Markdown',reply_markup=keyboard)
                     except:
                         pass
                 if len(DatosP)!=0:
@@ -39,10 +39,14 @@ def start(context: CallbackContext):
                 else:
                     seguir = True
                 
-        if len(DatosP)> 0:
+        if len(DatosP)> 9:
             with open(os.path.join(filedir,'Thesearch_bot\\Data\\'+page +'.txt'), 'wb') as filehandle:
                 pickle.dump(DatosP, filehandle)
-
+        else:
+            DatosP += Data_page
+            with open(os.path.join(filedir,'Thesearch_bot\\Data\\'+page +'.txt'), 'wb') as filehandle:
+                pickle.dump(DatosP, filehandle)
+            
 class comandos(object):
 
     @staticmethod
