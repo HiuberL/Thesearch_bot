@@ -15,10 +15,9 @@ def main():
 
     dispatcher = updater.dispatcher
     comandos = commands.comandos()
-    #j = updater.job_queue
-    #j.run_once(comandos.start,0.1)
+    j = updater.job_queue
+    j.run_once(commands.start,0.1)
     #j.run_repeating(comandos.start,14400)
-    dispatcher.add_handler(CommandHandler("start", commands.start))
     dispatcher.add_handler(CommandHandler("comunicado", comandos.Comunicado))
     dispatcher.add_handler(CommandHandler("Ban_Camila", comandos.ban))
     dispatcher.add_handler(CommandHandler("Gracias", comandos.Agradecimiento))

@@ -27,6 +27,7 @@ def scrappingdata(page,Country,Dataprevious):
     option.add_argument("--headless")
     option.add_argument("disable-gpu")
     option.add_argument("--log-level=3")
+    option.add_argument("window-size=1500x50000")
     driver_path = os.path.dirname(os.path.abspath(__file__))+"\chromedriver.exe"
     driver = webdriver.Chrome(driver_path,chrome_options=option)
     

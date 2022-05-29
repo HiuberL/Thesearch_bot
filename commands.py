@@ -7,7 +7,7 @@ import id
 import pickle
 import os
 
-def start(update:Update, context: CallbackContext):
+def start(context: CallbackContext):    
     filedir = os.path.dirname(os.path.realpath('__file__'))
     for page in id.Datos.page:
         try:
@@ -16,27 +16,32 @@ def start(update:Update, context: CallbackContext):
         except:
             Data_page=[]
         DatosP = []
+        seguir = true
         for d in id.Datos.Diccionario:
-            Datos = scrapping.scrappingdata(page,d,Data_page)
-            for n in range(0,len(Datos)):
-                Descripcion = str(Datos[n][2])
-                Descripcion = Descripcion.replace("\n\n", "\n")
-                Descripcion = Descripcion.replace("*",' ')
-                keyboard = InlineKeyboardMarkup.from_button(InlineKeyboardButton(text="Más Información", url=Datos[n][3]))       
-                try:
-                    if Datos[n][0]!="":
-                        context.bot.send_message(chat_id=id.Datos.chat_my_id,text="🔴 *"+Datos[n][0]+"*🔴\n▶️_"+Datos[n][1]+"_ ◀️\n \n*Descripción*:\n"+Descripcion+"\n" , parse_mode='Markdown',reply_markup=keyboard)
-                except:
-                    pass
-            if len(DatosP)!=0:
-                DatosP = DatosP+Datos
-            else:
-                DatosP = Datos
+            if seguir:
+                Datos = scrapping.scrappingdata(page,d,Data_page)
+                for n in range(0,len(Datos)):
+                    Descripcion = str(Datos[n][2])
+                    Descripcion = Descripcion.replace("\n\n", "\n")
+                    Descripcion = Descripcion.replace("*",' ')
+                    keyboard = InlineKeyboardMarkup.from_button(InlineKeyboardButton(text="Más Información", url=Datos[n][3]))       
+                    try:
+                        if Datos[n][0]!="":
+                            context.bot.send_message(chat_id=id.Datos.chat_my_id,text="🔴 *"+Datos[n][0]+"*🔴\n▶️_"+Datos[n][1]+"_ ◀️\n \n*Descripción*:\n"+Descripcion+"\n" , parse_mode='Markdown',reply_markup=keyboard)
+                    except:
+                        pass
+                if len(DatosP)!=0:
+                    DatosP = DatosP+Datos
+                else:
+                    DatosP = Datos
+                if page == 'LIN':
+                    seguir = False
+                else:
+                    seguir = True
+                
         if len(DatosP)> 0:
             with open(os.path.join(filedir,'Thesearch_bot\\Data\\'+page +'.txt'), 'wb') as filehandle:
                 pickle.dump(DatosP, filehandle)
-            if page == 'LIN':
-                Break
 
 class comandos(object):
 
