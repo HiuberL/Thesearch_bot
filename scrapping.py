@@ -1,4 +1,3 @@
-from errno import ECANCELED
 from tokenize import Number
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -8,6 +7,7 @@ from selenium.webdriver.common.keys import Keys
 import time
 import numpy
 import os
+import id
 
 def comprobData_previos(Datanew,Dataprevious):
     if len(Dataprevious) != 0:
@@ -132,7 +132,9 @@ def scrappingdata(page,Country,Dataprevious):
                     Description3 = driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/table/tbody/tr[2]/td/table/tbody/tr[5]/td[2]')
                     Description = Description.text + "\n" + Description2.text + '\n' + Description3.text
                     direccion = driver.current_url
-                    Data.append([Title,Position,Description,direccion])        
+                    c = comprobData_previos([Title,Position,Description,direccion],Dataprevious)
+                    if not c:
+                        Data.append([Title,Position,Description,direccion])        
                     driver.back()
                     time.sleep(1)
                 except:
@@ -140,6 +142,40 @@ def scrappingdata(page,Country,Dataprevious):
             driver.find_element(By.CSS_SELECTOR,'#formBuscaOferta\:pagina > div.ui-selectonemenu-trigger.ui-state-default.ui-corner-right > span').click()
             time.sleep(0.5)
             driver.find_element(By.CSS_SELECTOR,'#formBuscaOferta\:pagina_'+str(i)+'').click()
+            
+    if page =="ET":
+        time.sleep(1)
+        driver.get('https://e-talent.jobs/bolsa-de-trabajo/#s=1')       
+        time.sleep(2)
+        for i in id.Datos.Diccionario_ext:
+            time.sleep(2)
+            driver.find_element(By.CSS_SELECTOR,'#search_location').send_keys(i)
+            driver.find_element(By.CSS_SELECTOR,'#search_location').send_keys(Keys.ENTER)
+            time.sleep(2)
+            for n in range(1,11):
+                try:
+                    driver.find_element(By.XPATH,'//*[@id="post-19"]/div/div/ul/li['+str(n)+']').click()
+                    time.sleep(1)    
+                    Title = driver.find_element(By.CSS_SELECTOR,'#job-details > div > div > ul > li:nth-child(4) > div > span')
+                    Title = Title.text
+                    Position = driver.find_element(By.CSS_SELECTOR,'#job-details > div > div > ul > li:nth-child(3) > div > span > a')
+                    Position = Position.text
+                    Empresa = driver.find_element(By.CSS_SELECTOR,'#wrapper > div.container.right-sidebar > div.eleven.columns > div > div.company-info.left-company-logo > div.content > h4 > a > strong')
+                    Empresa = Empresa.text
+                    Position = Empresa + ' | ' + Position
+                    Description = driver.find_element(By.CSS_SELECTOR,'#wrapper > div.container.right-sidebar > div.eleven.columns > div > div.single_job_listing > div.job_description')
+                    Description = Description.text
+                    direccion = driver.current_url
+                    c = comprobData_previos([Title,Position,Description,direccion],Dataprevious)
+                    if not c:
+                        Data.append([Title,Position,Description,direccion])        
+                    driver.back()
+                    time.sleep(1)
+                except:
+                    pass
+            driver.get('https://e-talent.jobs/bolsa-de-trabajo/#s=1')
+            time.sleep(2)
+            driver.find_element(By.CSS_SELECTOR,'#wrapper > div.container.wpjm-container.full-width > div > form > div.job_filters_links > a.reset').click()        
     driver.close()        
     return Data
 
