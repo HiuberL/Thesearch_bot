@@ -2,12 +2,13 @@ from ast import Break
 from sqlalchemy import false, true
 from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CallbackContext
-import scrapping
+from scrapping import connect
 import id
 import pickle
 import os
 
 def start(context: CallbackContext):    
+    scrapping = connect()
     filedir = os.path.dirname(os.path.realpath('__file__'))
     for page in id.Datos.page:
         try:
@@ -34,7 +35,7 @@ def start(context: CallbackContext):
                     DatosP = DatosP+Datos
                 else:
                     DatosP = Datos
-                if page == 'LIN' or page == 'EE' or page == 'ET':
+                if page == 'LIN' or page == 'EE' or page == 'ET' or page == 'TD':
                     seguir = False
                 else:
                     seguir = True
@@ -46,6 +47,7 @@ def start(context: CallbackContext):
             DatosP += Data_page
             with open(os.path.join(filedir,'Thesearch_bot\\Data\\'+page +'.txt'), 'wb') as filehandle:
                 pickle.dump(DatosP, filehandle)
+    scrapping.close()    
             
 class comandos(object):
 
