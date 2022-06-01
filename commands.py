@@ -39,14 +39,18 @@ def start(context: CallbackContext):
                     seguir = False
                 else:
                     seguir = True
-                
-        if len(DatosP)> 9:
+        if page == 'CT' or page == 'UME' :
+            limite = 55
+        else:
+            limite = 9
+        if len(DatosP)> limite:
             with open(os.path.join(filedir,'Thesearch_bot\\Data\\'+page +'.txt'), 'wb') as filehandle:
                 pickle.dump(DatosP, filehandle)
         else:
             DatosP += Data_page
             with open(os.path.join(filedir,'Thesearch_bot\\Data\\'+page +'.txt'), 'wb') as filehandle:
                 pickle.dump(DatosP, filehandle)
+            
     scrapping.close()    
             
 class comandos(object):
