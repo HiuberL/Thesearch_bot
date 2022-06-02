@@ -207,7 +207,29 @@ class connect(object):
                     if not c:                    
                         Data.append([Title,Position,Description,direccion])
                 except:
-                    pass            
+                    pass       
+        if page =='OE':
+            time.sleep(1)
+            self.driver.get('https://www.opcionempleo.ec/ofertas-empleo-ecuador-114371.html?radius=15&nw=1')       
+            time.sleep(2)
+            for n in range(1,21):
+                try:
+                    Title = self.driver.find_element(By.XPATH,'/html/body/main/div/div/div/ul[2]/li['+str(n)+']/article/header/h2/a')
+                    Title = Title.text
+                    direccion = self.driver.find_element(By.XPATH,'/html/body/main/div/div/div/ul[2]/li['+str(n)+']/article/header/h2/a')
+                    direccion = direccion.get_attribute('href')
+                    Empresa = self.driver.find_element(By.XPATH,'/html/body/main/div/div/div/ul[2]/li['+str(n)+']/article/p')
+                    Empresa = Empresa.text
+                    Position = self.driver.find_element(By.XPATH,'/html/body/main/div/div/div/ul[2]/li['+str(n)+']/article/ul[2]/li')
+                    Position = Position.text
+                    Position = Position + " | " + Empresa
+                    Description = self.driver.find_element(By.XPATH,'/html/body/main/div/div/div/ul[2]/li['+str(n)+']/article/div')
+                    Description = Description.text
+                    c = self.comprobData_previos([Title,Position,Description,direccion],Dataprevious)
+                    if not c:                            
+                        Data.append([Title,Position,Description,direccion])        
+                except:
+                    pass
         return Data
 
     def close(self):

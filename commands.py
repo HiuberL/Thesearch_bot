@@ -35,10 +35,10 @@ def start(context: CallbackContext):
                     DatosP = DatosP+Datos
                 else:
                     DatosP = Datos
-                if page == 'LIN' or page == 'EE' or page == 'ET' or page == 'TD':
-                    seguir = False
-                else:
+                if page == 'CT' or page == 'UME':
                     seguir = True
+                else:
+                    seguir = False
         if page == 'CT' or page == 'UME' :
             limite = 55
         else:
