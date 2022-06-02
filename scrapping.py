@@ -230,6 +230,48 @@ class connect(object):
                         Data.append([Title,Position,Description,direccion])        
                 except:
                     pass
+        if page == 'AT':
+            time.sleep(1)
+            self.driver.get('https://acciontrabajo.ec/buscar-empleos?o=d')       
+            time.sleep(2)
+            for n in range(1,21):
+                try: 
+                    Title = self.driver.find_element(By.XPATH,'/html/body/div[2]/div[2]/div/div/div/div[3]/div/div/div/article/section['+str(n)+']/div/a/h2')
+                    Title = Title.text
+                    direccion = self.driver.find_element(By.XPATH,'/html/body/div[2]/div[2]/div/div/div/div[3]/div/div/div/article/section['+str(n)+']/div/a')
+                    direccion = direccion.get_attribute('href')
+                    Empresa = self.driver.find_element(By.XPATH,'/html/body/div[2]/div[2]/div/div/div/div[3]/div/div/div/article/section['+str(n)+']/div/a/b')
+                    Empresa = Empresa.text
+                    Position = self.driver.find_element(By.XPATH,'/html/body/div[2]/div[2]/div/div/div/div[3]/div/div/div/article/section['+str(n)+']/div/div/div/div[2]/span')
+                    Position = Position.text
+                    Position = Position + " | " + Empresa
+                    Description = self.driver.find_element(By.XPATH,'/html/body/div[2]/div[2]/div/div/div/div[3]/div/div/div/article/section['+str(n)+']/div/a/span')
+                    Description = Description.text
+                    c = self.comprobData_previos([Title,Position,Description,direccion],Dataprevious)
+                    if not c:                        
+                        Data.append([Title,Position,Description,direccion])        
+                except:
+                    pass            
+        if page == 'PE':
+            time.sleep(1)
+            self.driver.get('https://www.porfinempleo.com')       
+            time.sleep(2)
+            for n in range(1,21):
+                try: 
+                    Title = self.driver.find_element(By.XPATH,'/html/body/div/div[4]/section[2]/div/div/div/div[2]/div['+str(n)+']/div[2]/div/a[1]/div')
+                    Title = Title.text
+                    direccion = self.driver.find_element(By.XPATH,'/html/body/div/div[4]/section[2]/div/div/div/div[2]/div['+str(n)+']/div[2]/div/a[1]')
+                    direccion = direccion.get_attribute('href')
+                    Position = self.driver.find_element(By.XPATH,'/html/body/div/div[4]/section[2]/div/div/div/div[2]/div['+str(n)+']/div[2]/div/a[2]/span')
+                    Position = Position.text
+                    Position = Position
+                    Description = self.driver.find_element(By.XPATH,'/html/body/div/div[4]/section[2]/div/div/div/div[2]/div['+str(n)+']/div[2]/p')
+                    Description = Description.text
+                    c = self.comprobData_previos([Title,Position,Description,direccion],Dataprevious)
+                    if not c:                     
+                        Data.append([Title,Position,Description,direccion])        
+                except:
+                    pass            
         return Data
 
     def close(self):
