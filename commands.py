@@ -40,9 +40,9 @@ def start(context: CallbackContext):
                 else:
                     seguir = False
         if page == 'CT' or page == 'UME' :
-            limite = 55
+            limite = 115
         else:
-            limite = 9
+            limite = 60
         if len(DatosP)> limite:
             with open(os.path.join(filedir,'Thesearch_bot\\Data\\'+page +'.txt'), 'wb') as filehandle:
                 pickle.dump(DatosP, filehandle)

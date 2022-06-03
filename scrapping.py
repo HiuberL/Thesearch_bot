@@ -176,7 +176,7 @@ class connect(object):
                     except:
                         pass
                 self.driver.get('https://e-talent.jobs/bolsa-de-trabajo/#s=1')
-                time.sleep(2)
+                time.sleep(5)
                 WebDriverWait(self.driver,10)\
                     .until(econdi.element_to_be_clickable((By.CSS_SELECTOR,'#wrapper > div.container.wpjm-container.full-width > div > form > div.job_filters_links > a.reset')))\
                     .click()
