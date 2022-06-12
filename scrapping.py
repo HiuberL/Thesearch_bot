@@ -6,6 +6,7 @@ from selenium.webdriver.common.keys import Keys
 import time
 import numpy
 import os
+from sys import executable
 import id
 
 class connect(object):
@@ -17,7 +18,7 @@ class connect(object):
         option.add_argument("disable-gpu")
         option.add_argument("--log-level=3")
         option.add_argument("window-size=1500x50000")
-        driver_path = os.path.dirname(os.path.abspath(__file__))+"\chromedriver.exe"
+        driver_path =os.path.dirname(executable)+"/chromedriver"
         self.driver = webdriver.Chrome(driver_path,chrome_options=option)
 
     @staticmethod
@@ -116,70 +117,75 @@ class connect(object):
                     pass
                 
         if page == "EE":
-            time.sleep(1)
-            self.driver.get('https://encuentraempleo.trabajo.gob.ec/socioEmpleo-war/paginas/procesos/busquedaOferta.jsf')       
-            time.sleep(2)
-            for i in range(1,6):
+            try:
+                time.sleep(1)
+                self.driver.get('https://encuentraempleo.trabajo.gob.ec/socioEmpleo-war/paginas/procesos/busquedaOferta.jsf')       
                 time.sleep(2)
-                for n in range(1,6):
-                    try:
-                        self.driver.find_element(By.XPATH,'/html/body/div[1]/div[2]/form/table/tbody/tr/td[2]/fieldset['+str(n)+']/div/a').click()
-                        time.sleep(2)
-                        Title = self.driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/table/tbody/tr[1]/td/table/tbody/tr[1]/td[2]')
-                        Title = Title.text
-                        Position = self.driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/table/tbody/tr[1]/td/table/tbody/tr[2]/td[2]')
-                        Position = Position.text
-                        Description = self.driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/table/tbody/tr[2]/td/table/tbody/tr[3]/td[2]')
-                        Description2 = self.driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/table/tbody/tr[2]/td/table/tbody/tr[3]/td[4]')
-                        Description3 = self.driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/table/tbody/tr[2]/td/table/tbody/tr[5]/td[2]')
-                        Description = Description.text + "\n" + Description2.text + '\n' + Description3.text
-                        direccion = self.driver.current_url
-                        c = self.comprobData_previos([Title,Position,Description,direccion],Dataprevious)
-                        if not c:
-                            Data.append([Title,Position,Description,direccion])        
-                        self.driver.back()
-                        time.sleep(1)
-                    except:
-                        pass
-                self.driver.find_element(By.CSS_SELECTOR,'#formBuscaOferta\:pagina > div.ui-selectonemenu-trigger.ui-state-default.ui-corner-right > span').click()
-                time.sleep(0.5)
-                self.driver.find_element(By.CSS_SELECTOR,'#formBuscaOferta\:pagina_'+str(i)+'').click()
-                
+                for i in range(1,6):
+                    time.sleep(2)
+                    for n in range(1,6):
+                        try:
+                            self.driver.find_element(By.XPATH,'/html/body/div[1]/div[2]/form/table/tbody/tr/td[2]/fieldset['+str(n)+']/div/a').click()
+                            time.sleep(2)
+                            Title = self.driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/table/tbody/tr[1]/td/table/tbody/tr[1]/td[2]')
+                            Title = Title.text
+                            Position = self.driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/table/tbody/tr[1]/td/table/tbody/tr[2]/td[2]')
+                            Position = Position.text
+                            Description = self.driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/table/tbody/tr[2]/td/table/tbody/tr[3]/td[2]')
+                            Description2 = self.driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/table/tbody/tr[2]/td/table/tbody/tr[3]/td[4]')
+                            Description3 = self.driver.find_element(By.XPATH,'/html/body/div[1]/div[3]/form/table/tbody/tr[2]/td/table/tbody/tr[5]/td[2]')
+                            Description = Description.text + "\n" + Description2.text + '\n' + Description3.text
+                            direccion = self.driver.current_url
+                            c = self.comprobData_previos([Title,Position,Description,direccion],Dataprevious)
+                            if not c:
+                                Data.append([Title,Position,Description,direccion])        
+                            self.driver.back()
+                            time.sleep(1)
+                        except:
+                            pass
+                    self.driver.find_element(By.CSS_SELECTOR,'#formBuscaOferta\:pagina > div.ui-selectonemenu-trigger.ui-state-default.ui-corner-right > span').click()
+                    time.sleep(0.5)
+                    self.driver.find_element(By.CSS_SELECTOR,'#formBuscaOferta\:pagina_'+str(i)+'').click()
+            except:
+                pass                
         if page =="ET":
-            time.sleep(1)
-            self.driver.get('https://e-talent.jobs/bolsa-de-trabajo/#s=1')       
-            time.sleep(2)
-            for i in id.Datos.Diccionario_ext:
+            try:
+                time.sleep(1)
+                self.driver.get('https://e-talent.jobs/bolsa-de-trabajo/#s=1')       
                 time.sleep(2)
-                self.driver.find_element(By.CSS_SELECTOR,'#search_location').send_keys(i)
-                self.driver.find_element(By.CSS_SELECTOR,'#search_location').send_keys(Keys.ENTER)
-                time.sleep(2)
-                for n in range(1,11):
-                    try:
-                        self.driver.find_element(By.XPATH,'//*[@id="post-19"]/div/div/ul/li['+str(n)+']').click()
-                        time.sleep(1)    
-                        Title = self.driver.find_element(By.CSS_SELECTOR,'#job-details > div > div > ul > li:nth-child(4) > div > span')
-                        Title = Title.text
-                        Position = self.driver.find_element(By.CSS_SELECTOR,'#job-details > div > div > ul > li:nth-child(3) > div > span > a')
-                        Position = Position.text
-                        Empresa = self.driver.find_element(By.CSS_SELECTOR,'#wrapper > div.container.right-sidebar > div.eleven.columns > div > div.company-info.left-company-logo > div.content > h4 > a > strong')
-                        Empresa = Empresa.text
-                        Position = Empresa + ' | ' + Position
-                        Description = self.driver.find_element(By.CSS_SELECTOR,'#wrapper > div.container.right-sidebar > div.eleven.columns > div > div.single_job_listing > div.job_description')
-                        Description = Description.text
-                        direccion = self.driver.current_url
-                        c = self.comprobData_previos([Title,Position,Description,direccion],Dataprevious)
-                        if not c:
-                            Data.append([Title,Position,Description,direccion])        
-                        self.driver.back()
-                        time.sleep(1)
-                    except:
-                        pass
-                self.driver.get('https://e-talent.jobs/bolsa-de-trabajo/#s=1')
-                time.sleep(5)
-                WebDriverWait(self.driver,10)\
-                    .until(econdi.element_to_be_clickable((By.CSS_SELECTOR,'#wrapper > div.container.wpjm-container.full-width > div > form > div.job_filters_links > a.reset')))\
-                    .click()
+                for i in id.Datos.Diccionario_ext:
+                    time.sleep(2)
+                    self.driver.find_element(By.CSS_SELECTOR,'#search_location').send_keys(i)
+                    self.driver.find_element(By.CSS_SELECTOR,'#search_location').send_keys(Keys.ENTER)
+                    time.sleep(4)
+                    for n in range(1,11):
+                        try:
+                            self.driver.find_element(By.XPATH,'//*[@id="post-19"]/div/div/ul/li['+str(n)+']').click()
+                            time.sleep(1)    
+                            Title = self.driver.find_element(By.CSS_SELECTOR,'#job-details > div > div > ul > li:nth-child(4) > div > span')
+                            Title = Title.text
+                            Position = self.driver.find_element(By.CSS_SELECTOR,'#job-details > div > div > ul > li:nth-child(3) > div > span > a')
+                            Position = Position.text
+                            Empresa = self.driver.find_element(By.CSS_SELECTOR,'#wrapper > div.container.right-sidebar > div.eleven.columns > div > div.company-info.left-company-logo > div.content > h4 > a > strong')
+                            Empresa = Empresa.text
+                            Position = Empresa + ' | ' + Position
+                            Description = self.driver.find_element(By.CSS_SELECTOR,'#wrapper > div.container.right-sidebar > div.eleven.columns > div > div.single_job_listing > div.job_description')
+                            Description = Description.text
+                            direccion = self.driver.current_url
+                            c = self.comprobData_previos([Title,Position,Description,direccion],Dataprevious)
+                            if not c:
+                                Data.append([Title,Position,Description,direccion])        
+                            self.driver.back()
+                            time.sleep(1)
+                        except:
+                            pass
+                    self.driver.get('https://e-talent.jobs/bolsa-de-trabajo/#s=1')       
+                    time.sleep(2)                    
+                    WebDriverWait(self.driver,500)\
+                        .until(econdi.element_to_be_clickable((By.CSS_SELECTOR,'#wrapper > div.container.wpjm-container.full-width > div > form > div.job_filters_links > a.reset')))\
+                        .click()
+            except:
+                pass
                     
         if page =="TD":
             time.sleep(1)

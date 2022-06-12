@@ -1,23 +1,22 @@
-from ast import Break
-from sqlalchemy import false, true
 from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CallbackContext
 from scrapping import connect
 import id
 import pickle
 import os
+from sys import executable
 
 def start(context: CallbackContext):    
     scrapping = connect()
-    filedir = os.path.dirname(os.path.realpath('__file__'))
+    filedir = os.path.dirname(executable)
     for page in id.Datos.page:
         try:
-            with open(os.path.join(filedir,'Thesearch_bot\\Data\\'+page +'.txt'), 'rb') as filehandle:
+            with open(filedir + '\\Data\\'+page +'.txt', 'rb') as filehandle:
                 Data_page = pickle.load(filehandle)
         except:
             Data_page=[]
         DatosP = []
-        seguir = true
+        seguir = True
         for d in id.Datos.Diccionario:
             if seguir:
                 Datos = scrapping.scrappingdata(page,d,Data_page)
@@ -44,14 +43,14 @@ def start(context: CallbackContext):
         else:
             limite = 60
         if len(DatosP)> limite:
-            with open(os.path.join(filedir,'Thesearch_bot\\Data\\'+page +'.txt'), 'wb') as filehandle:
+            with open(filedir + '\\Data\\'+page +'.txt', 'wb') as filehandle:
                 pickle.dump(DatosP, filehandle)
         else:
             DatosP += Data_page
-            with open(os.path.join(filedir,'Thesearch_bot\\Data\\'+page +'.txt'), 'wb') as filehandle:
+            with open(filedir + '\\Data\\'+page +'.txt', 'wb') as filehandle:
                 pickle.dump(DatosP, filehandle)
             
-    scrapping.close()    
+    scrapping.close()
             
 class comandos(object):
 
