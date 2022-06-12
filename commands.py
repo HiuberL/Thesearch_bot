@@ -11,7 +11,7 @@ def start(context: CallbackContext):
     filedir = os.path.dirname(executable)
     for page in id.Datos.page:
         try:
-            with open(filedir + '\\Data\\'+page +'.txt', 'rb') as filehandle:
+            with open(filedir + '/Data/'+page +'.txt', 'rb') as filehandle:
                 Data_page = pickle.load(filehandle)
         except:
             Data_page=[]
@@ -43,11 +43,11 @@ def start(context: CallbackContext):
         else:
             limite = 60
         if len(DatosP)> limite:
-            with open(filedir + '\\Data\\'+page +'.txt', 'wb') as filehandle:
+            with open(filedir + '/Data/'+page +'.txt', 'wb') as filehandle:
                 pickle.dump(DatosP, filehandle)
         else:
             DatosP += Data_page
-            with open(filedir + '\\Data\\'+page +'.txt', 'wb') as filehandle:
+            with open(filedir + '/Data/'+page +'.txt', 'wb') as filehandle:
                 pickle.dump(DatosP, filehandle)
             
     scrapping.close()
